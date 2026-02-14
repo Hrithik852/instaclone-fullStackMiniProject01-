@@ -1,17 +1,25 @@
 {
   "name": "day8",
   "version": "1.0.0",
-  "description": "",
+  "description": "A RESTful authentication API built with Node.js, Express, and MongoDB. This project provides user registration and login functionality with JWT-based authentication.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hrithik852/instaclone-fullStackMiniProject01-.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Hrithik852/instaclone-fullStackMiniProject01-/issues"
+  },
+  "homepage": "https://github.com/Hrithik852/instaclone-fullStackMiniProject01-#readme",
   "dependencies": {
-    "cookie-parser": "^1.4.7",
+    "bcryptjs": "^3.0.3",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
