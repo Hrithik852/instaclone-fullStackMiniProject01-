@@ -39,7 +39,7 @@ const loginController = async (req, res) => {
             message:'user doesnt exists'
         })
     }
-    const isPassMatch=bcrypt.compare(password,user.password)
+    const isPassMatch=await bcrypt.compare(password,user.password)
     if(!isPassMatch){
         return res.status(409).json({
             message:"invalid pass"
