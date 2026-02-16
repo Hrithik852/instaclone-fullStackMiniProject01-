@@ -1,19 +1,45 @@
-const express=require('express')
+const postModel=require('../models/post.model');
 const ImageKit=require('@imagekit/nodejs')
-const { toFile }=require('@imagekit/nodejs')
+const {toFile}=require('@imagekit/nodejs')
+const jwt=require('jsonwebtoken')
 const client=new ImageKit({
-  privateKey: process.env.IMAGE_KIT, // This is the default and can be omitted
+    privateKey:process.env.IMAGE_KIT
 })
-const createPostController=async(req,res)=>{
-    const {caption}=req.body;
- console.log(req.body,req.file);
- const file=await client.files.upload({
-     file: await toFile(Buffer.from(req.file.buffer), 'file'),
-     fileName: 'test',
-    });
-    res.send(file)
+let createPostController=async(req,res)=>{
+    console.log(req.body,req.file)
+
+    const token=req.cookies.token;
+    if(!token){
+        return res.status(401).json({message:'token not found'})
+    }
+    let decoded=null;
+    try{
+        decoded=jwt.verify(token,process.env.JWT_SECRET)
+    }
+    catch(err){
+        return res.status(401).json({
+            message:'user not authorized'
+        })
+    }
+
+
+    const file=await client.files.upload({
+        file:await toFile(Buffer.from(req.file.buffer),'file'),
+        fileName:'postImage'
+    })
+
+    const post=await postModel.create({
+        caption:req.body.caption,
+        ImageUrl:file.url,
+        user:decoded.id,
+
+    })
+    res.status(201).json({
+        message: "Post created successfully.",
+        post
+    })
 }
 
 module.exports={
-    createPostController,
-};
+    createPostController
+}
