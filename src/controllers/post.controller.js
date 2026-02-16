@@ -40,6 +40,40 @@ let createPostController=async(req,res)=>{
     })
 }
 
+const getPostController=async(req,res)=>{
+
+
+const userId=req.user.id;
+
+const posts=await postModel.find({user:userId})
+if(posts.length==0){
+    return res.status(404).json({
+        message:"no posts sadly"
+    })
+}
+res.status(200).json({message:'posts fetched successfully',posts})
+}
+
+const getPostDetailsController=async(req,res)=>{
+
+
+    const userId=req.user.id;
+    const postId=req.params.id;
+
+    const postDetails=await postModel.findById(postId);
+    if(!postDetails){
+        return res.status(404).json({message:'post not found'})
+    }
+    const isUserValid=userId===postDetails.user.toString();
+    if(!isUserValid){
+        return res.status(403).json({message:"you are not him bro"})
+    }
+    res.status(200).json({
+        message:'post details fetched',postDetails
+    })
+}
 module.exports={
-    createPostController
+    createPostController,
+    getPostController,
+    getPostDetailsController,
 }
