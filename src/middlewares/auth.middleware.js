@@ -1,24 +1,24 @@
-const jwt=require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
-const identifyUser=(req,res,next)=>{
-    const token=req.cookies.token;
+const identifyUser = (req, res, next) => {
+    const token = req.cookies.token;
 
-    if(!token){
+    if (!token) {
         return res.status(401).json({
-            message:'there is no token'
+            message: 'there is no token'
         })
     }
-    let decoded=null;
-    try{
-        decoded=jwt.verify(token,process.env.JWT_SECRET)
+    let decoded = null;
+    try {
+        decoded = jwt.verify(token, process.env.JWT_SECRET)
     }
-    catch(err){
+    catch (err) {
         return res.status(401).json({
-            message:'not authorized'
+            message: 'not authorized'
         })
     }
 
-    req.user=decoded;
+    req.user = decoded;
     next()
 }
-module.exports=identifyUser;
+module.exports = identifyUser;
