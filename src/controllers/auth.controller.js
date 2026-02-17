@@ -14,7 +14,7 @@ const registerController = async (req, res) => {
     const hash = await bcrypt.hash(password, 10)
     const user = await userModel.create({ username, email, password: hash, bio, pfp })
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
+    const token = jwt.sign({ id: user._id,username }, process.env.JWT_SECRET, { expiresIn: '1d' })
     res.cookie('token', token)
 
     res.status(201).json({
@@ -44,7 +44,7 @@ const loginController = async (req, res) => {
             message: "invalid pass"
         })
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
+    const token = jwt.sign({ id: user._id,username }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
     res.cookie('token', token)
     res.status(201).json({
