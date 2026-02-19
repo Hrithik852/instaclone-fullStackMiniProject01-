@@ -3,7 +3,7 @@ import {createContext,useState} from 'react'
 
 export const Authcontext=createContext();
 
-const AuthProvider = ({children}) => {
+export const AuthProvider = ({children}) => {
     const [user, setuser] = useState(null)
     const [loading, setloading] = useState(false)
     const loginHandler=async(username,password)=>{
@@ -20,7 +20,7 @@ const AuthProvider = ({children}) => {
         }
     }
 
-    const registerHAndler=async(username,email,password)=>{
+    const registerHandler=async(username,email,password)=>{
         setloading(true)
         try{
             const response=await register(username,email,password)
@@ -34,9 +34,8 @@ const AuthProvider = ({children}) => {
         }
     }
   return (
-    <Authcontext.Provider value={{user,loading,loginHandler,registerHAndler}}>
+    <Authcontext.Provider value={{user,loading,loginHandler,registerHandler}}>
         {children}
     </Authcontext.Provider>
   )
 }
-
