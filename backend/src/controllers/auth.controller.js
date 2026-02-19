@@ -57,4 +57,10 @@ const loginController = async (req, res) => {
 
 }
 
-module.exports = { registerController, loginController }
+const getMeController=async(req,res)=>{
+    const {username}=req.user;
+    const userDetails=await userModel.findOne({username});
+    res.status(200).json({user:{username:userDetails.username,email:userDetails.email,bio:userDetails.bio,pfp:userDetails.pfp,},})
+}
+
+module.exports = { registerController, loginController, getMeController }
