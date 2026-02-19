@@ -18,11 +18,15 @@ A full-stack Instagram-like social media application built with Node.js, Express
 - ✅ Protected Routes with Auth Middleware
 
 ### Frontend Features
-- ✅ React-based SPA
+- ✅ React-based SPA with Modern Architecture
 - ✅ User Authentication UI (Login/Register)
+- ✅ Context API for State Management
+- ✅ Custom Hooks (useAuth)
+- ✅ Service Layer for API Communication
 - ✅ Posts Management Interface
-- ✅ Responsive Design
+- ✅ Responsive Design with SCSS
 - ✅ React Router for Navigation
+- ✅ Feature-based Folder Structure
 
 ## Tech Stack
 
@@ -41,7 +45,42 @@ A full-stack Instagram-like social media application built with Node.js, Express
 - **Framework:** React v19.1.1
 - **Build Tool:** Vite v7.1.7
 - **Routing:** React Router DOM v7.13.0
-- **Styling:** CSS
+- **State Management:** Context API
+- **Styling:** SCSS
+- **HTTP Client:** Fetch API
+
+## Architecture Patterns
+
+### Backend Architecture
+- **MVC Pattern:** Separation of concerns with Models, Controllers, and Routes
+- **Middleware Pattern:** Authentication and request processing
+- **Service Layer:** ImageKit integration for file uploads
+- **Repository Pattern:** Mongoose models for data access
+
+### Frontend Architecture
+- **Feature-based Structure:** Code organized by features (auth, posts, etc.)
+- **Service Layer Pattern:** API calls separated into service modules
+- **Context API:** Global state management for authentication
+- **Custom Hooks:** Reusable logic (useAuth)
+- **Component-based Architecture:** Modular and reusable React components
+
+## Key Features Explained
+
+### Authentication Flow
+1. **Registration:** User creates account → Password hashed with bcrypt → JWT token generated → Token stored in HTTP-only cookie
+2. **Login:** User authenticates → Credentials verified → JWT token issued → Cookie set with 1-day expiration
+3. **Protected Routes:** Middleware verifies JWT token from cookies → User data attached to request → Access granted or denied
+
+### Follow System
+- **Follow Request:** User sends follow request → Status set to "pending"
+- **Accept Request:** Recipient accepts → Status updates to "accepted" → Both users connected
+- **Reject Request:** Request deleted from database
+- **Unfollow:** Accepted follow relationship removed
+
+### Post & Like System
+- **Post Creation:** Image uploaded to ImageKit CDN → Post document created with image URL
+- **Like Toggle:** Check if like exists → If yes, remove like → If no, add like
+- **Post Feed:** Retrieves all posts with populated user information
 
 ## Project Structure
 
@@ -73,15 +112,25 @@ A full-stack Instagram-like social media application built with Node.js, Express
 │   ├── index.html                     # HTML entry
 │   ├── package.json                   # Frontend dependencies
 │   ├── vite.config.js                 # Vite configuration
+│   ├── eslint.config.js               # ESLint configuration
 │   └── src/
 │       ├── App.jsx                    # Main App component
+│       ├── AppRoutes.jsx              # Route configuration
 │       ├── main.jsx                   # React entry point
-│       ├── routes.jsx                 # Route configuration
+│       ├── style.scss                 # Global styles
+│       ├── assets/                    # Static assets
 │       └── features/
-│           ├── auth/
-│           │   ├── Login.jsx          # Login page
-│           │   └── Register.jsx       # Registration page
-│           └── posts/                 # Post components
+│           └── auth/
+│               ├── auth.context.jsx   # Auth context provider
+│               ├── hooks/
+│               │   └── useAuth.js     # Auth custom hook
+│               ├── pages/
+│               │   ├── Login.jsx      # Login page
+│               │   └── Register.jsx   # Registration page
+│               ├── services/
+│               │   └── auth.api.js    # Auth API service layer
+│               └── styles/
+│                   └── forms.scss     # Auth form styles
 └── README.md
 ```
 
@@ -503,15 +552,31 @@ Reject a follow request from a user.
 
 ⚠️ **Important Security Notes:**
 
-1. **Password Hashing:** Uses bcryptjs with salt rounds for secure password hashing ✓
-2. **JWT Secret:** Use a strong, randomly generated secret in production
-3. **HTTPS:** Always use HTTPS in production to protect cookies and tokens
-4. **Cookie Security:** Consider adding `httpOnly`, `secure`, and `sameSite` flags to cookies in production
-5. **Environment Variables:** Never commit `.env` files to version control
-6. **Input Validation:** Implement proper input validation and sanitization
-7. **Rate Limiting:** Add rate limiting to prevent abuse
-8. **Image Upload:** ImageKit handles secure image storage and CDN delivery
-9. **Authentication Middleware:** Protected routes require valid JWT tokens
+### Implemented Security Features ✓
+1. **Password Hashing:** bcryptjs with salt rounds for secure password storage
+2. **JWT Authentication:** Token-based authentication with expiration
+3. **Protected Routes:** Middleware-based route protection
+4. **Secure File Upload:** ImageKit CDN for secure image storage
+
+### Production Recommendations ⚠️
+1. **JWT Secret:** Use a strong, randomly generated secret (min 32 characters)
+2. **HTTPS:** Always use HTTPS in production to protect cookies and tokens
+3. **Cookie Security:** Add `httpOnly`, `secure`, and `sameSite` flags:
+   ```javascript
+   res.cookie('token', token, {
+     httpOnly: true,
+     secure: process.env.NODE_ENV === 'production',
+     sameSite: 'strict',
+     maxAge: 86400000 // 1 day
+   });
+   ```
+4. **Environment Variables:** Never commit `.env` files to version control
+5. **Input Validation:** Implement validation with libraries like Joi or express-validator
+6. **Rate Limiting:** Add rate limiting with express-rate-limit
+7. **CORS Configuration:** Configure CORS properly for your domain
+8. **Security Headers:** Use helmet.js for security headers
+9. **MongoDB Injection:** Mongoose provides some protection, but sanitize inputs
+10. **File Upload Validation:** Validate file types and sizes before upload
 
 ## Development
 
@@ -541,25 +606,79 @@ npm run dev  # Vite dev server with hot reload
 
 ## Features to Implement
 
-- [ ] Comments on posts
-- [ ] Stories functionality
-- [ ] Direct messaging
-- [ ] Notifications system
-- [ ] Search functionality
-- [ ] User profiles page
-- [ ] Edit profile
+### High Priority
+- [ ] User profiles page with followers/following lists
+- [ ] Edit profile functionality
 - [ ] Delete posts
-- [ ] Image filters
+- [ ] Comments on posts
+- [ ] Notifications system
+
+### Medium Priority
+- [ ] Search functionality (users and posts)
+- [ ] Post feed algorithm (following users only)
+- [ ] Direct messaging
+- [ ] Stories functionality
+- [ ] Image filters and editing
+
+### Low Priority
 - [ ] Hashtags support
+- [ ] Saved posts
+- [ ] Multiple images per post
+- [ ] Video posts
+- [ ] Explore page
+
+## Contributing
+
+Contributions are welcome! This is a learning project, so feel free to:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## Troubleshooting
+
+### Common Issues
+
+**Backend won't start:**
+- Verify MongoDB is running and connection string is correct
+- Check if port 3000 is already in use
+- Ensure all environment variables are set in `.env`
+
+**Authentication not working:**
+- Clear browser cookies
+- Check JWT_SECRET is set correctly
+- Verify token expiration hasn't passed
+
+**Image upload fails:**
+- Verify ImageKit credentials in `.env`
+- Check file size (ImageKit may have limits)
+- Ensure file type is supported
+
+**CORS errors:**
+- Configure CORS in `app.js` for your frontend URL
+- In development: `cors({ origin: 'http://localhost:5173', credentials: true })`
+
+**MongoDB connection errors:**
+- Check MongoDB Atlas IP whitelist
+- Verify connection string format
+- Ensure network access is configured
 
 ## Repository
 
 GitHub: [instaclone-fullStackMiniProject01](https://github.com/Hrithik852/instaclone-fullStackMiniProject01-)
 
+## Author
+
+**Hrithik852**
+- GitHub: [@Hrithik852](https://github.com/Hrithik852)
+
 ## License
 
-ISC
+This project is licensed under the ISC License - free to use for learning and educational purposes.
 
 ---
 
-**Note:** This is a full-stack learning project featuring a complete Instagram-like social media platform with authentication, posts, follows, and likes functionality.
+**Built with ❤️ as a full-stack learning project**
+
+This Instagram clone demonstrates modern web development practices including RESTful API design, JWT authentication, file uploads, database relationships, and a React-based frontend with feature-driven architecture. Perfect for learning full-stack development concepts!
