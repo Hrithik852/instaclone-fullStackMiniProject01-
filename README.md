@@ -1,32 +1,33 @@
 # Instagram Clone - Full Stack Social Media Application
 
-A full-stack Instagram-like social media application built with Node.js, Express, MongoDB, and React. Features include user authentication, post creation with image uploads, follow/unfollow system, like functionality, and follow request management.
+A full-stack Instagram-like social media application built with **Node.js**, **Express**, **MongoDB**, and **React**. This project demonstrates modern web development practices including JWT authentication, RESTful API design, and component-based frontend architecture.
 
-## Features
+## ✨ Features
 
-### Backend Features
-- ✅ User Registration & Login
-- ✅ JWT Authentication with Cookie Storage
-- ✅ Secure Password Hashing (bcryptjs)
-- ✅ User Profile Management (bio, profile picture)
-- ✅ Post Creation with Image Upload (ImageKit)
-- ✅ Posts Feed
-- ✅ Post Details
-- ✅ Follow/Unfollow Users
-- ✅ Follow Request Management (Accept/Reject)
-- ✅ Like/Unlike Posts
-- ✅ Protected Routes with Auth Middleware
+### 🔐 Authentication & User Management
+- User registration and login with JWT authentication
+- HTTP-only cookie storage for secure token management
+- Password hashing with bcryptjs
+- Protected routes via authentication middleware
 
-### Frontend Features
-- ✅ React-based SPA with Modern Architecture
-- ✅ User Authentication UI (Login/Register)
-- ✅ Context API for State Management
-- ✅ Custom Hooks (useAuth)
-- ✅ Service Layer for API Communication
-- ✅ Posts Management Interface
-- ✅ Responsive Design with SCSS
-- ✅ React Router for Navigation
-- ✅ Feature-based Folder Structure
+### 📸 Posts & Media
+- Create posts with image uploads via ImageKit CDN
+- View posts feed with user information
+- Get individual post details
+
+### 👥 Social Features
+- Follow/unfollow users
+- Follow request management (send, accept, reject)
+- Like/unlike posts
+- User profile with bio and profile picture
+
+### 🎨 Frontend
+- React SPA with feature-based architecture
+- Context API for global state management
+- Custom hooks (useAuth)
+- Service layer for API communication
+- Responsive design with SCSS
+- React Router navigation
 
 ## Tech Stack
 
