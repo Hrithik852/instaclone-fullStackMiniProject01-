@@ -1,31 +1,28 @@
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
 import '../styles/forms.scss'
 import { Link, useNavigate } from 'react-router-dom'
-import {useAuth} from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuth'
 const Register = () => {
-    const [user, setuser] = useState('')
-        const [password, setpassword] = useState("")
-        const [email, setemail] = useState("")
-        const Navigate=useNavigate()
-        const {loading,registerHandler}=useAuth()
-        if(loading){
-            return <main><h1>Loading</h1></main>
-        }
+    const navigate=useNavigate()
+    const [username, setusername] = useState("")
+    const [password, setpassword] = useState("")
+    const {loading,registerHandler}=useAuth()
+    if(loading){
+        return <h1>loading</h1>
+    }
   return (
-   <main>
-    <div className="form-container" onSubmit={(e)=>{
-        e.preventDefault()
-        registerHandler(user,email,password).then(res=>{console.log(res)
-            Navigate('/')
-        }
-        ).catch(err=>console.log(err)
-        )
-    }}>
+    <main>
+    <div className="form-container" >
         <h1>Register</h1>
-        <form>
+        <form onSubmit={(e)=>{
+            e.preventDefault()
+            registerHandler(username,email,password).then(res=>{console.log(res);
+                navigate('/')
+            })
+        }}>
             <input
-            value={user} onInput={(e)=>{
-                setuser(e.target.value)
+            value={username} onInput={(e)=>{
+                setusername(e.target.value)
             }} 
             type="text" placeholder='enter your username' />
             <input 

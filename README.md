@@ -2,6 +2,9 @@
 
 A full-stack Instagram-like social media application built with **Node.js**, **Express**, **MongoDB**, and **React**. This project demonstrates modern web development practices including JWT authentication, RESTful API design, and component-based frontend architecture.
 
+> 🔗 **Repository:** [GitHub](https://github.com/Hrithik852/instaclone-fullStackMiniProject01-)  
+> 👤 **Author:** [Hrithik852](https://github.com/Hrithik852)
+
 ## ✨ Features
 
 ### 🔐 Authentication & User Management
@@ -277,7 +280,7 @@ Register a new user account.
 **Response (201 Created):**
 ```json
 {
-  "message": "user registered succesfully",
+  "message": "user registered successfully",
   "user": {
     "username": "johndoe",
     "email": "john@example.com",
@@ -291,7 +294,7 @@ Register a new user account.
 - `bio` and `pfp` are optional
 - Default profile picture is provided if not specified
 - Password is hashed using bcrypt
-- Sets JWT token in cookies
+- Sets JWT token in HTTP-only cookies
 
 #### 2. Login User
 **POST** `/api/auth/login`
@@ -311,7 +314,7 @@ Authenticate an existing user.
 **Response (201 Created):**
 ```json
 {
-  "message": "user logged in succesfully",
+  "message": "user logged in successfully",
   "user": {
     "username": "johndoe",
     "email": "john@example.com",
@@ -319,6 +322,23 @@ Authenticate an existing user.
     "pfp": "https://example.com/profile.jpg"
   }
 }
+```
+
+**Notes:**
+- Sets JWT token in HTTP-only cookies
+- Can login with username or email
+
+#### 3. Logout User
+**POST** `/api/auth/logout`
+
+Logs out the current user by clearing the authentication token.
+
+**Response (200 OK):**
+```json
+{
+  "message": "user logged out successfully"
+}
+```
 
 ## 🗄️ Database Models
 
@@ -345,19 +365,22 @@ Authenticate an existing user.
 ### Like
 ```javascript
 {
-  user: ObjectId,       // Reference to User
-  post: ObjectId        // Reference to Post
-}
-```
+  user: ObjectId,       // Referen (10 salt rounds)
+- ✅ JWT authentication with HTTP-only cookies
+- ✅ Protected routes via authentication middleware
+- ✅ Secure file uploads to ImageKit CDN
+- ✅ MongoDB injection protection via Mongoose
 
-### Follow
-```javascript
-{
-  from: ObjectId,       // Follower (User reference)
-  to: ObjectId,         // Following (User reference)
-  status: String        // "pending" | "accepted"
-}
-```
+### Production Recommendations
+- 🔐 Use strong JWT secrets (32+ characters, random)
+- 🔐 Enable HTTPS and secure cookie flags (`secure: true, sameSite: 'strict'`)
+- 🔐 Add rate limiting (express-rate-limit)
+- 🔐 Implement input validation (Joi or express-validator)
+- 🔐 Use security headers (helmet.js)
+- 🔐 Configure CORS properly for your domain
+- 🔐 Validate file uploads (type, size, malware scanning)
+- 🔐 Add environment-specific configurations
+- 🔐 Enable MongoDB authentication in production
 
 ## 🔒 Security
 
@@ -401,67 +424,42 @@ cd frontend && npm run dev
 ## 🚧 Roadmap
 
 ### High Priority
-- [ ] User profile pages
-- [ ] Edit/delete posts
-- [ ] Comments system
-- [ ] Notifications
-- [ ] Edit profile functionality
+- [🤝 Contributing
 
-### Medium Priority
-- [ ] Search (users & posts)
-- [ ] Following-only feed
-- [ ] Direct messaging
-- [ ] Stories
-- [ ] Image filters
+Contributions are welcome! This is a learning project, so feel free to:
 
-### Low Priority
-- [ ] Hashtags
-- [ ] Saved posts
-- [ ] Multiple images per post
-- [ ] Video support
-- [ ] Explore page
+1. **Fork the repository**
+2. **Create a feature branch**
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+3. **Commit your changes**
+   ```bash
+   git commit -m 'Add some AmazingFeature'
+   ```
+4. **Push to the branch**
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+5. **Open a Pull Request**
 
-## 📄 License
+## 🐛 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
 
 ## 🔗 Links
+| Issue | Solution |
+|-------|----------|
+| **Backend won't start** | • Verify MongoDB is running<br>• Check if port 3000 is in use (`lsof -i :3000`)<br>• Ensure all `.env` variables are set |
+| **Authentication not working** | • Clear browser cookies<br>• Verify JWT_SECRET is set<br>• Check token hasn't expired |
+| **Image upload fails** | • Verify ImageKit credentials<br>• Check file size limits<br>• Ensure supported file type (jpg, png, etc.) |
+| **CORS errors** | • Configure CORS in `app.js`<br>• Use: `cors({ origin: 'http://localhost:5173', credentials: true })` |
+| **MongoDB connection errors** | • Check MongoDB Atlas IP whitelist<br>• Verify connection string format<br>• Ensure database user has correct permissions |
+| **Loading state not working** | • Verify component is wrapped in `<AuthProvider>`<br>• Check context is properly exported<br>• Ensure useAuth hook has error handling |
 
-- **Repository:** [GitHub](https://github.com/Hrithik852/instaclone-fullStackMiniProject01-)
-- **Author:** [Hrithik852](https://github.com/Hrithik852)
+## 📄 License
 
----
-
-**Built with ❤️ using Node.js, Express, MongoDB, and React**
-
-Contributions are welcome! This is a learning project, so feel free to:
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## Troubleshooting
-
-### Common Issues
-
-**Backend won't start:**
-- Verify MongoDB is running and connection string is correct
-- Check if port 3000 is already in use
-- Ensure all environment variables are set in `.env`
-
-**Authentication not working:**
-- Clear browser cookies
-- Check JWT_SECRET is set correctly
-- Verify token expiration hasn't passed
-
-**Image upload fails:**
-- Verify ImageKit credentials in `.env`
-- Check file size (ImageKit may have limits)
-- Ensure file type is supported
-
-**CORS errors:**
-- Configure CORS in `app.js` for your frontend URL
+This project is licensed under the **ISC License** URL
 - In development: `cors({ origin: 'http://localhost:5173', credentials: true })`
 
 **MongoDB connection errors:**
@@ -487,3 +485,12 @@ This project is licensed under the ISC License - free to use for learning and ed
 **Built with ❤️ as a full-stack learning project**
 
 This Instagram clone demonstrates modern web development practices including RESTful API design, JWT authentication, file uploads, database relationships, and a React-based frontend with feature-driven architecture. Perfect for learning full-stack development concepts!
+<div align="center">
+
+**Built with ❤️ as a full-stack learning project**
+
+This Instagram clone demonstrates modern web development practices including RESTful API design, JWT authentication, file uploads, database relationships, and a React-based frontend with feature-driven architecture.
+
+**Perfect for learning full-stack development concepts!**
+
+</div>

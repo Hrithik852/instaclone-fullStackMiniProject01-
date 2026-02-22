@@ -1,35 +1,30 @@
-import axios from "axios"
-
+ import axios from 'axios'
 const api=axios.create({
-    baseURL:'http://localhost:3000/api/auth',
+    baseURL:"http://localhost:3000/api/auth",
     withCredentials:true,
 })
-
-export const Login=async(username,password)=>{
+export const login=async(username,password)=>{
     try{
-        const response=await api.post('/login',{username,password})
-        return response.data
-    }
-    catch(err){
-        throw err;
-    }
-}
-export const Register=async(username,email,password)=>{
-    try{
-        const response=await api.post('/register',{
-            username,
-            email,
-            password,
-        })
+        const response=await api.post('/login',{username,password});
         return response.data;
     }
     catch(err){
         throw err;
     }
 }
+export const register=async(username,email,password)=>{
+    try{
+        const response=await api.post('/register',{username,email,password});
+        return response.data;
+    }
+    catch(err){
+        throw err;
+    }
+}
+
 export const getMe=async()=>{
     try{
-        const response=api.get('/get-me');
+        const response=await api.get('/get-me');
         return response.data
     }
     catch(err){
