@@ -32,7 +32,7 @@ const loginController = async (req, res) => {
             { username },
             { email }
         ]
-    })
+    }).select("+password")
     if (!user) {
         return res.status(409).json({
             message: 'user doesnt exists'
