@@ -17,7 +17,7 @@ const Register = () => {
         <form onSubmit={(e)=>{
             e.preventDefault()
             registerHandler(username,email,password).then(res=>{console.log(res);
-                navigate('/')
+                navigate('/feed')
             })
         }}>
             <input

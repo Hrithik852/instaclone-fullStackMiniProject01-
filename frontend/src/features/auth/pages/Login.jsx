@@ -18,7 +18,7 @@ const Login = () => {
             e.preventDefault()
             loginHandler(username,password).then((res)=>{
                 console.log(res);
-                navigate('/')
+                navigate('/feed')
             }).catch(err=>console.log(err)
             )
         }}>
