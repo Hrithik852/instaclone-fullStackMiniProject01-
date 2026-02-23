@@ -2,8 +2,9 @@
 
 A full-stack Instagram-like social media application built with **Node.js**, **Express**, **MongoDB**, and **React**. This project demonstrates modern web development practices including JWT authentication, RESTful API design, and component-based frontend architecture.
 
-> 🔗 **Repository:** [GitHub](https://github.com/Hrithik852/instaclone-fullStackMiniProject01-)  
-> 👤 **Author:** [Hrithik852](https://github.com/Hrithik852)
+- **Repository:** [GitHub](https://github.com/Hrithik852/instaclone-fullStackMiniProject01-)
+- **Author:** [Hrithik852](https://github.com/Hrithik852)
+- **License:** ISC License
 
 ## ✨ Features
 
@@ -365,11 +366,27 @@ Logs out the current user by clearing the authentication token.
 ### Like
 ```javascript
 {
-  user: ObjectId,       // Referen (10 salt rounds)
+  user: ObjectId,       // Reference to User
+  post: ObjectId        // Reference to Post
+}
+```
+
+### Follow
+```javascript
+{
+  follower: ObjectId,   // User who follows
+  following: ObjectId,  // User being followed
+  status: String        // 'accepted' or 'pending'
+}
+```
+
+## 🔒 Security
+
+### Implemented
+- ✅ Password hashing with bcryptjs (10 salt rounds)
 - ✅ JWT authentication with HTTP-only cookies
 - ✅ Protected routes via authentication middleware
-- ✅ Secure file uploads to ImageKit CDN
-- ✅ MongoDB injection protection via Mongoose
+- ✅ Secure file uploads via ImageKit CDN
 
 ### Production Recommendations
 - 🔐 Use strong JWT secrets (32+ characters, random)
@@ -382,115 +399,66 @@ Logs out the current user by clearing the authentication token.
 - 🔐 Add environment-specific configurations
 - 🔐 Enable MongoDB authentication in production
 
-## 🔒 Security
-
-### Implemented
-- ✅ Password hashing with bcryptjs
-- ✅ JWT authentication with HTTP-only cookies
-- ✅ Protected routes via middleware
-- ✅ Secure file uploads to ImageKit CDN
-
-### Production Recommendations
-- Use strong JWT secrets (32+ characters)
-- Enable HTTPS and secure cookie flags
-- Add rate limiting (express-rate-limit)
-- Implement input validation (Joi/express-validator)
-- Use security headers (helmet.js)
-- Configure CORS properly
-- Validate file uploads (type/size)
-
 ## 🛠️ Development
-
-```bash
-# Backend (with auto-reload)
-cd backend && npm run dev
-
-# Frontend (with hot reload)
-cd frontend && npm run dev
-```
 
 ### Available Scripts
 
 **Backend:**
-- `npm run dev` - Development with nodemon
-- `node server.js` - Production server
+```bash
+npm run dev      # Development with nodemon
+node server.js   # Production server
+```
 
 **Frontend:**
-- `npm run dev` - Vite dev server
-- `npm run build` - Production build
-- `npm run preview` - Preview build
-- `npm run lint` - ESLint check
+```bash
+npm run dev      # Vite dev server
+npm run build    # Production build
+npm run preview  # Preview build
+npm run lint     # ESLint check
+```
 
-## 🚧 Roadmap
+## 🐛 Troubleshooting
 
-### High Priority
-- [🤝 Contributing
+| Issue | Solution |
+|-------|----------|
+| **Backend won't start** | • Verify MongoDB is running<br>• Check if port 3000 is in use (`lsof -i :3000`)<br>• Ensure all `.env` variables are set |
+| **Authentication not working** | • Clear browser cookies<br>• Verify JWT_SECRET is set<br>• Check token hasn't expired |
+| **Image upload fails** | • Verify ImageKit credentials<br>• Check file size limits<br>• Ensure supported file type (jpg, png, etc.) |
+| **CORS errors** | Configure CORS in `app.js`:<br>`cors({ origin: 'http://localhost:5173', credentials: true })` |
+| **MongoDB connection errors** | • Check MongoDB Atlas IP whitelist<br>• Verify connection string format<br>• Ensure database user has correct permissions |
+| **Context not working** | • Verify component is wrapped in Provider<br>• Check context is properly exported<br>• Ensure hooks have error handling |
+
+## 🤝 Contributing
 
 Contributions are welcome! This is a learning project, so feel free to:
 
 1. **Fork the repository**
 2. **Create a feature branch**
    ```bash
-   git checkout -b feature/AmazingFeature
+   git checkout -b feature/YourFeature
    ```
 3. **Commit your changes**
    ```bash
-   git commit -m 'Add some AmazingFeature'
+   git commit -m 'Add YourFeature'
    ```
 4. **Push to the branch**
    ```bash
-   git push origin feature/AmazingFeature
+   git push origin feature/YourFeature
    ```
 5. **Open a Pull Request**
 
-## 🐛 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🔗 Links
-| Issue | Solution |
-|-------|----------|
-| **Backend won't start** | • Verify MongoDB is running<br>• Check if port 3000 is in use (`lsof -i :3000`)<br>• Ensure all `.env` variables are set |
-| **Authentication not working** | • Clear browser cookies<br>• Verify JWT_SECRET is set<br>• Check token hasn't expired |
-| **Image upload fails** | • Verify ImageKit credentials<br>• Check file size limits<br>• Ensure supported file type (jpg, png, etc.) |
-| **CORS errors** | • Configure CORS in `app.js`<br>• Use: `cors({ origin: 'http://localhost:5173', credentials: true })` |
-| **MongoDB connection errors** | • Check MongoDB Atlas IP whitelist<br>• Verify connection string format<br>• Ensure database user has correct permissions |
-| **Loading state not working** | • Verify component is wrapped in `<AuthProvider>`<br>• Check context is properly exported<br>• Ensure useAuth hook has error handling |
-
 ## 📄 License
 
-This project is licensed under the **ISC License** URL
-- In development: `cors({ origin: 'http://localhost:5173', credentials: true })`
-
-**MongoDB connection errors:**
-- Check MongoDB Atlas IP whitelist
-- Verify connection string format
-- Ensure network access is configured
-
-## Repository
-
-GitHub: [instaclone-fullStackMiniProject01](https://github.com/Hrithik852/instaclone-fullStackMiniProject01-)
-
-## Author
-
-**Hrithik852**
-- GitHub: [@Hrithik852](https://github.com/Hrithik852)
-
-## License
-
-This project is licensed under the ISC License - free to use for learning and educational purposes.
+This project is licensed under the **ISC License** - free to use for learning and educational purposes.
 
 ---
 
-**Built with ❤️ as a full-stack learning project**
-
-This Instagram clone demonstrates modern web development practices including RESTful API design, JWT authentication, file uploads, database relationships, and a React-based frontend with feature-driven architecture. Perfect for learning full-stack development concepts!
 <div align="center">
 
-**Built with ❤️ as a full-stack learning project**
+**Built with ❤️ as a learning project**
 
-This Instagram clone demonstrates modern web development practices including RESTful API design, JWT authentication, file uploads, database relationships, and a React-based frontend with feature-driven architecture.
+This Instagram clone demonstrates modern web development practices including RESTful API design, JWT authentication, file uploads, and a React-based frontend with feature-driven architecture.
 
-**Perfect for learning full-stack development concepts!**
+Perfect for learning full-stack development!
 
 </div>
