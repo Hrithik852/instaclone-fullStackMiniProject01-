@@ -6,6 +6,7 @@ const registerController = async (req, res) => {
     const isuserExists = await userModel.findOne({
         $or: [{ email }, { username }]
     })
+    
     if (isuserExists) {
         return res.status(409).json({
             message: (isuserExists.email === email) ? 'mail already in use' : 'username already in use'
@@ -13,7 +14,6 @@ const registerController = async (req, res) => {
     }
     const hash = await bcrypt.hash(password, 10)
     const user = await userModel.create({ username, email, password: hash, bio, pfp })
-
     const token = jwt.sign({ id: user._id,username }, process.env.JWT_SECRET, { expiresIn: '1d' })
     res.cookie('token', token)
 
