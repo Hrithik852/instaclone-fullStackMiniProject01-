@@ -25,10 +25,15 @@ padding: 10px;
             padding-block: 0.5rem;
             border-radius: 5px;
             .user{
+                .wrapper{
+                    display: flex;
+                    align-items: center;
+                    gap: .25rem;
+                }
                 display: flex;
                 gap: 0.5rem;
                 align-items: center;
-                
+                justify-content: space-between;
                 .img-wrapper{
                     border-radius: 50%;
                     display: flex;

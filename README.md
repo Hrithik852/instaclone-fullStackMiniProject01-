@@ -1,201 +1,97 @@
 # Instagram Clone - Full Stack Social Media Application
 
-A full-stack Instagram-like social media application built with **Node.js**, **Express**, **MongoDB**, and **React**. This project demonstrates modern web development practices including JWT authentication, RESTful API design, and component-based frontend architecture.
+Full-stack Instagram-like social media app built with Node.js, Express, MongoDB, and React. It includes JWT auth with HTTP-only cookies, image uploads via ImageKit, and a feature-based frontend architecture.
 
-- **Repository:** [GitHub](https://github.com/Hrithik852/instaclone-fullStackMiniProject01-)
-- **Author:** [Hrithik852](https://github.com/Hrithik852)
-- **License:** ISC License
+- Repository: https://github.com/Hrithik852/instaclone-fullStackMiniProject01-
+- Author: https://github.com/Hrithik852
+- License: ISC
 
-## ✨ Features
+## Features
 
-### 🔐 Authentication & User Management
-- User registration and login with JWT authentication
-- HTTP-only cookie storage for secure token management
-- Password hashing with bcryptjs
-- Protected routes via authentication middleware
+- Authentication: register, login, logout, protected routes
+- Posts: create with image upload, feed, post details
+- Social: follow/unfollow, follow requests, like/unlike
+- Frontend: React + Vite, Context API, SCSS, React Router
 
-### 📸 Posts & Media
-- Create posts with image uploads via ImageKit CDN
-- View posts feed with user information
-- Get individual post details
+## Tech Stack
 
-### 👥 Social Features
-- Follow/unfollow users
-- Follow request management (send, accept, reject)
-- Like/unlike posts
-- User profile with bio and profile picture
+- Backend: Express, MongoDB + Mongoose, JWT, bcryptjs, ImageKit, Multer
+- Frontend: React, Vite, React Router, Axios, SCSS
 
-### 🎨 Frontend
-- React SPA with feature-based architecture
-- Context API for global state management
-- Custom hooks (useAuth)
-- Service layer for API communication
-- Responsive design with SCSS
-- React Router navigation
-
-## 🛠️ Tech Stack
-
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Backend** | Express.js 5.2.1 | Web application framework |
-| | MongoDB + Mongoose 9.2.1 | Database and ODM |
-| | JWT + bcryptjs | Authentication & password security |
-| | ImageKit + Multer | Image upload & storage |
-| | cookie-parser | Cookie handling |
-| **Frontend** | React 19.1.1 | UI library |
-| | Vite 7.1.7 | Build tool & dev server |
-| | React Router 7.13.0 | Client-side routing |
-| | Axios 1.13.5 | HTTP client |
-| | SCSS | Styling |
-
-## 🏗️ Architecture
-
-### Backend (MVC Pattern)
-- **Models:** Mongoose schemas for User, Post, Like, Follow
-- **Controllers:** Business logic for auth, posts, and user actions
-- **Routes:** RESTful API endpoints
-- **Middlewares:** JWT authentication, request validation
-- **Services:** ImageKit integration for file uploads
-
-### Frontend (Feature-based)
-- **Feature modules:** Self-contained features (auth, posts, etc.)
-- **Context API:** Global authentication state
-- **Custom hooks:** Reusable logic (useAuth)
-- **Service layer:** API communication abstraction
-- **Component-based:** Modular React components
-
-### Key Flows
-
-**Authentication:**
-```
-Register → Hash Password → Generate JWT → Set HTTP-only Cookie → Redirect
-Login → Verify Credentials → Generate JWT → Set Cookie → Access Protected Routes
-Protected Route → Verify JWT Middleware → Attach User to Request → Proceed
-```
-
-**Social Interactions:**
-```
-Follow → Create pending request → Accept/Reject → Update relationship
-Like → Check existence → Toggle like → Update count
-Post → Upload to ImageKit → Save URL to MongoDB → Display in feed
-```
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 day8/
 ├── backend/
-│   ├── server.js                          # Application entry point
-│   ├── package.json
+│   ├── server.js
 │   └── src/
-│       ├── app.js                         # Express app setup & middleware
+│       ├── app.js
 │       ├── config/
-│       │   └── db.js                      # MongoDB connection
 │       ├── controllers/
-│       │   ├── auth.controller.js         # Registration, login, logout
-│       │   ├── post.controller.js         # CRUD operations for posts
-│       │   └── user.controller.js         # Follow/unfollow, like/unlike
 │       ├── middlewares/
-│       │   └── auth.middleware.js         # JWT token verification
 │       ├── models/
-│       │   ├── user.model.js              # User schema & methods
-│       │   ├── post.model.js              # Post schema
-│       │   ├── like.model.js              # Like relationships
-│       │   └── follow.model.js            # Follow/request relationships
 │       └── routes/
-│           ├── auth.routes.js             # /api/auth endpoints
-│           ├── post.routes.js             # /api/posts endpoints
-│           └── user.routes.js             # /api/users endpoints
-│
 ├── frontend/
 │   ├── index.html
-│   ├── package.json
 │   ├── vite.config.js
 │   └── src/
-│       ├── App.jsx                        # Root component
-│       ├── app.routes.jsx                 # Route definitions
-│       ├── main.jsx                       # React entry point
+│       ├── App.jsx
+│       ├── main.jsx
 │       └── features/
-│           └── auth/
-│               ├── auth.context.jsx       # Auth state & provider
-│               ├── hooks/
-│               │   └── useAuth.js         # Auth hook
-│               ├── pages/
-│               │   ├── Login.jsx          # Login form
-│               │   └── Register.jsx       # Registration form
-│               ├── services/
-│               │   └── auth.api.js        # Auth API calls
-│               └── styles/
-│                   └── forms.scss         # Form styling
-│
 └── README.md
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
-- **Node.js** 14+ ([Download](https://nodejs.org/))
-- **MongoDB** ([Local install](https://www.mongodb.com/try/download/community) or [Atlas account](https://www.mongodb.com/cloud/atlas))
-- **ImageKit account** ([Sign up](https://imagekit.io/))
+
+- Node.js 14+
+- MongoDB (local or Atlas)
+- ImageKit account
 
 ### Backend Setup
 
-1. **Navigate to backend directory:**
-   ```bash
-   cd backend
-   ```
+```bash
+cd backend
+npm install
+```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+Create a .env file in backend:
 
-3. **Create `.env` file** in the `backend` directory:
-   ```env
-   MONGO_ID=mongodb://localhost:27017/instagram_clone
-   # or use MongoDB Atlas connection string
-   
-   JWT_SECRET=your_super_secure_random_jwt_secret_key
-   
-   IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
-   IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
-   IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/your_imagekit_id
-   ```
+```env
+MONGO_ID=mongodb://localhost:27017/instagram_clone
+JWT_SECRET=your_super_secure_random_jwt_secret_key
 
-4. **Start the server:**
-   ```bash
-   npm run dev        # Development with nodemon
-   # or
-   node server.js     # Production
-   ```
-   
-   Backend runs at **http://localhost:3000**
+IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
+IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
+IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/your_imagekit_id
+```
+
+Run backend:
+
+```bash
+npm run dev
+```
+
+Backend runs at http://localhost:3000
 
 ### Frontend Setup
 
-1. **Navigate to frontend directory:**
-   ```bash
-   cd frontend
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Start development server:**
-   ```bash
-   npm run dev
-   ```
-   
-   Frontend runs at **http://localhost:5173**
-
-### Quick Start (Both Servers)
 ```bash
-# Terminal 1 - Backend
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend runs at http://localhost:5173
+
+### Quick Start
+
+```bash
+# Terminal 1
 cd backend && npm run dev
 
-# Terminal 2 - Frontend  
+# Terminal 2
 cd frontend && npm run dev
 ```
 

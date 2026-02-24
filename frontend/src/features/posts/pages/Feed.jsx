@@ -6,7 +6,7 @@ import '../styles/feed.scss'
 import Nav from '../../../shared/components/Nav'
 const Feed = () => {
 
-   const {loading,feed,handleGetFeed,likeHandler,unlikeHandler}=usePosts()
+   const {loading,feed,handleGetFeed,likeHandler,unlikeHandler,followHandler}=usePosts()
     useEffect(()=>{
         handleGetFeed()
     },[])
@@ -25,7 +25,7 @@ const Feed = () => {
             <div className="feed">
                 <div className="posts">
                     {feed.map(post=>{
-                        return <Post likeHandler={likeHandler} unlikeHandler={unlikeHandler} user={post.user} post={post} />
+                        return <Post likeHandler={likeHandler} followHandler={followHandler} unlikeHandler={unlikeHandler} user={post.user} post={post} />
                     }).reverse()}
                 </div>
             </div>

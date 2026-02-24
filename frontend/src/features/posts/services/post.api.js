@@ -29,3 +29,8 @@ export const unpostLike=async(postid)=>{
     const response=like.post('/unlike/'+postid);
     return response.data
 }
+
+export const follow=async(username)=>{
+    const response=like.post('/follow/'+username)
+    return response.data
+}

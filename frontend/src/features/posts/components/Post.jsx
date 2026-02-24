@@ -1,13 +1,17 @@
 import React from 'react'
+import { useState } from 'react'
 
 const Post = ({ user, post,likeHandler,unlikeHandler }) => {
+    
     return (
-        <div className="post">
-            <div className="user">
+        <div className="post"><div>
+            <div className="user"><div className='wrapper'>
                 <div className="img-wrapper">
                     <img src={user.pfp} alt="" />
                 </div>
-                <p>{user.username}</p>
+                <p>{user.username}</p></div>
+            <button onClick={()=>isfolllowing?setisfolllowing(false):setisfolllowing(true)}>{isfolllowing?"following":"follow"}</button>
+            </div>
             </div>
             <img src={post.ImageUrl} alt="" />
             <div className="icons">
