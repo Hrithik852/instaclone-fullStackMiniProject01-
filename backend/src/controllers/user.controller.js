@@ -62,6 +62,7 @@ const likePostController = async (req, res) => {
     res.status(201).json({ message: 'like the post ' + post, likeRecord })
 }
 
+
 const getRequestsController=async(req,res)=>{
     const username = req.user.username;
     const requests=await followModel.find({
@@ -99,4 +100,22 @@ const rejectFollowRequestController=async(req,res)=>{
     res.status(204).json({message:"rejected the user",isFollowrequestExists})
 
 }
-module.exports = { followController, unfollowController, likePostController,getRequestsController,acceptFollowRequestController,rejectFollowRequestController}
+
+
+const unlikePostController = async (req, res) => {
+    const postId = req.params.postId;
+    const username = req.user.username;
+    const post = await postModel.findById(postId);
+    if (!post) {
+        return res.status(404).json({ message: 'post not found' })
+    }
+
+    const alreadyLiked = await likeModel.findOne({ post: postId, user: username });
+    if (!alreadyLiked) {
+        return res.status(400).json({ message: 'not liked' })
+    }
+
+   await likeModel.findOneAndDelete(alreadyLiked._id)
+    res.status(201).json({ message: 'like the post ' + post, message:"unliked" })
+}
+module.exports = { followController, unfollowController, likePostController,getRequestsController,acceptFollowRequestController,rejectFollowRequestController,unlikePostController}

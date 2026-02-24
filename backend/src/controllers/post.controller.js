@@ -36,6 +36,9 @@ let createPostController = async (req, res) => {
         user: decoded.id,
 
     })
+    
+    await post.populate('user')
+    
     res.status(201).json({
         message: "Post created successfully.",
         post

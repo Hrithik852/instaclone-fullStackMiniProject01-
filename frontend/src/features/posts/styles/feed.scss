@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-
+padding: 10px;
     .feed {
         max-width: 300px;
         width: 100%;
@@ -23,7 +23,7 @@
             background-color: #312626;
             padding-inline: 0.5rem;
             padding-block: 0.5rem;
-
+            border-radius: 5px;
             .user{
                 display: flex;
                 gap: 0.5rem;
@@ -55,6 +55,7 @@
 
                 .like{
                     color: red;
+                    fill: red;
                 }
                 
                 svg{
